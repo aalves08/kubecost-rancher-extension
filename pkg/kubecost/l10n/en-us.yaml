@@ -4,11 +4,11 @@ kubecost:
     tootlip: Costs associated with this namespace
     title: Costs (last 24H)
     costs:
-      cpuCost:     CPU
-      ramCost:    RAM
-      pvCost:      GPU
-      gpuCost:     PV
-      networkCost:  LB
-      lbCost:      Network
-      totalCost:   Total
+      cpuCost: CPU
+      ramCost: RAM
+      pvCost: PV    
+      gpuCost: GPU
+      networkCost: Network
+      lbCost: LB     
+      totalCost: Total
     noCosts: Metrics not available.
