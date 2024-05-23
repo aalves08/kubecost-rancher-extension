@@ -13,8 +13,7 @@ export default function(plugin: IPlugin): void {
   // Add namespaces tab
   plugin.addTab(
     TabLocation.RESOURCE_DETAIL, { resource: [NAMESPACE] }, {
-      name:       'kubecost',
-      labelKey:   'kubecost.namespaceTab.label',
+      name:       'Kubecost',
       weight:     -10,
       tooltipKey: 'kubecost.namespaceTab.tooltip',
       component:  () => import('./components/RunningCosts.vue')
@@ -22,10 +21,7 @@ export default function(plugin: IPlugin): void {
 
   plugin.addCard(
     CardLocation.CLUSTER_DASHBOARD_CARD,
-    { cluster: ['c-m-79v5n8xb'] },
-    {
-      // label:     'Cluster running costs',
-      component: () => import('./components/RunningCosts.vue')
-    }
+    {},
+    { component: () => import('./components/RunningCosts.vue') }
   );
 }

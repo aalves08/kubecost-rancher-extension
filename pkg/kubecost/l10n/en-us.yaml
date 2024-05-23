@@ -1,14 +1,16 @@
 kubecost:
+  title: Kubecost - Costs breakdown for the last 24H
+  appNotInstalled: Kubecost is not installed on this cluster! You will need to install Kubecost first.
+  noDataAvailable: No data available
+  costs:
+    cpuCost: CPU
+    ramCost: RAM
+    pvCost: PV    
+    gpuCost: GPU
+    networkCost: Network
+    lbCost: LB     
+    totalCost: Total
+  noCosts: Metrics not available
   namespaceTab:
-    label: kubecost
+    label: Kubecost
     tootlip: Costs associated with this namespace
-    title: Costs (last 24H)
-    costs:
-      cpuCost: CPU
-      ramCost: RAM
-      pvCost: PV    
-      gpuCost: GPU
-      networkCost: Network
-      lbCost: LB     
-      totalCost: Total
-    noCosts: Metrics not available.
