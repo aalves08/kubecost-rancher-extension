@@ -50,35 +50,42 @@ export async function getKubecostData(options:kubecostDataOptions):Promise<kubec
   const path = `model/allocation?window=${ options.window || '1d' }&aggregate=${ options.aggregate || 'namespace' }&accumulate=true&chartType=costovertime&costUnit=cumulative&external=false&filter=&idle=true&idleByNode=false&includeSharedCostBreakdown=false&shareCost=0&shareIdle=false&shareLabels=&shareNamespaces=&shareSplit=weighted&shareTenancyCosts=false`;
   const url = `${ prefix }/api/v1/namespaces/${ namespace }/services/${ service }/proxy/${ path }`;
 
-  const res = await options.ctx.$store.dispatch('cluster/request', { url, redirectUnauthorized: false });
+  try {
+    const res = await options.ctx.$store.dispatch('cluster/request', { url, redirectUnauthorized: false });
 
-  if (res.code === 200) {
-    const model = res.data?.[0][targetNamespace || 'cluster-one'];
+    if (res.code === 200) {
+      const model = res.data?.[0][targetNamespace || 'cluster-one'];
 
-    if (model) {
-      const costs = {
-        cpuCost:     model.cpuCost.toFixed(2),
-        ramCost:     model.ramCost.toFixed(2),
-        pvCost:      model.pvCost.toFixed(2),
-        gpuCost:     model.gpuCost.toFixed(2),
-        networkCost: model.networkCost.toFixed(2),
-        lbCost:      model.loadBalancerCost.toFixed(2),
-        totalCost:   model.totalCost.toFixed(2)
-      };
+      if (model) {
+        const costs = {
+          cpuCost:     model.cpuCost.toFixed(2),
+          ramCost:     model.ramCost.toFixed(2),
+          pvCost:      model.pvCost.toFixed(2),
+          gpuCost:     model.gpuCost.toFixed(2),
+          networkCost: model.networkCost.toFixed(2),
+          lbCost:      model.loadBalancerCost.toFixed(2),
+          totalCost:   model.totalCost.toFixed(2)
+        };
 
-      const costsData = Object.entries(costs).map(([key, value]) => ({ name: options.ctx.t(`kubecost.costs.${ key }`), value: `$${ value }` }));
+        const costsData = Object.entries(costs).map(([key, value]) => ({ name: options.ctx.t(`kubecost.costs.${ key }`), value: `$${ value }` }));
 
-      return costsData;
-    } else {
-      return {
-        type: 'info',
-        msg:  options.ctx.t('kubecost.noDataAvailable')
-      };
+        return costsData;
+      } else {
+        return {
+          type: 'info',
+          msg:  options.ctx.t('kubecost.noDataAvailable')
+        };
+      }
     }
+  } catch (error: any) {
+    return {
+      type: 'error',
+      msg:  error.message
+    };
   }
 
   return {
     type: 'error',
-    msg:  res.message
+    msg:  options.ctx.t('kubecost.unknownError')
   };
 }

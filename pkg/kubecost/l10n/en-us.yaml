@@ -2,6 +2,7 @@ kubecost:
   title: Kubecost - Costs breakdown for the last 24H
   appNotInstalled: Kubecost is not installed on this cluster! You will need to install Kubecost first.
   noDataAvailable: No data available
+  unknownError: An unknown error occurred. Please try again
   costs:
     cpuCost: CPU
     ramCost: RAM
